@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmpowerRide: Bridging the Gap</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        /* Global Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+        
+        /* Utility Classes */
+        .flex-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .grid-container {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+
+        /* No longer used: .hidden { display: none !important; } */
+
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-full { border-radius: 9999px; }
+
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .p-8 { padding: 2rem; }
+        
+        .mt-2 { margin-top: 0.5rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-10 { margin-bottom: 2.5rem; }
+        .mb-12 { margin-bottom: 3rem; }
+
+        .font-bold { font-weight: 700; }
+        .font-extrabold { font-weight: 800; }
+        .font-semibold { font-weight: 600; }
+        .italic { font-style: italic; }
+
+        /* Custom Component Styles */
+        .card {
+            background-color: #27272a;
+            border: 1px solid #3f3f46;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
+            border-color: #ffeb3b;
+        }
+
+        .highlight-on-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .highlight-on-hover:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(255, 255, 0, 0.5);
+        }
+
+        .nav-link-hover {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link-hover:hover {
+            color: #ffeb3b;
+        }
+        .nav-link-hover:hover::after {
+            transform: scaleX(1);
+        }
+        .nav-link-hover::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #ffeb3b;
+            bottom: -5px;
+            left: 0;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        /* Hero Section Gradients */
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background-image: linear-gradient(to right, #a855f7, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @media (min-width: 768px) {
+            .hero-title { font-size: 3.75rem; }
+        }
+
+        .cta-text {
+            font-size: 2.25rem;
+            background-image: linear-gradient(to right, #34d399, #fde047);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @media (min-width: 640px) {
+            .cta-text { font-size: 3rem; }
+        }
+        @media (min-width: 768px) {
+            .cta-text { font-size: 3.75rem; }
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: rgba(24, 24, 27, 0.7); /* Semi-transparent background */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            padding: 1rem 0;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background-image: linear-gradient(to right, #a855f7, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+        }
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+        .nav-link-hover {
+            position: relative;
+        }
+        .nav-link-hover::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #ffeb3b;
+            transition: width 0.3s ease;
+        }
+        .nav-link-hover:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .nav-button.register {
+            background-color: #db2777;
+            background-image: linear-gradient(to right, #be185d, #db2777);
+            box-shadow: 0 4px 10px rgba(219, 39, 119, 0.4);
+        }
+        .nav-button.register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(219, 39, 119, 0.6);
+        }
+        
+        .nav-button.book {
+            background-color: #059669;
+            background-image: linear-gradient(to right, #047857, #059669);
+            box-shadow: 0 4px 10px rgba(5, 150, 105, 0.4);
+        }
+        .nav-button.book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(5, 150, 105, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-links {
+                flex-direction: column;
+                margin-top: 1rem;
+            }
+            .nav-buttons {
+                flex-direction: column;
+                margin-top: 1rem;
+                width: 100%;
+            }
+            .nav-buttons .nav-button {
+                width: 80%;
+            }
+        }
+        /* Page Transitions */
+        .page {
+            min-height: calc(100vh - 8rem);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Fact Card Animation */
+        .fact-card {
+            animation: pulse 4s infinite ease-in-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .fact-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
+            border-color: #ffeb3b;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        /* Image Overlays */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 0.5rem;
+        }
+
+        /* Star Rating */
+        .star-rating {
+            font-size: 1.5rem;
+            color: #ffc107;
+        }
+        .star-rating .filled {
+            color: #ffc107;
+        }
+        .star-rating .empty {
+            color: #ccc;
+        }
+
+        /* Responsive Grid Layouts */
+        .grid-3-col {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 2rem;
+            max-width: 72rem;
+            margin: auto;
+        }
+        
+        @media (min-width: 768px) {
+            .grid-3-col {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .grid-5-col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .grid-5-col {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .grid-5-col {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        /* Form & Button Styles */
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #3f3f46;
+            border: 1px solid #52525b;
+            border-radius: 0.5rem;
+            color: #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 2px #a855f7;
+        }
+        
+        .btn {
+            width: 100%;
+            color: white;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn.primary { background-color: #10b981; }
+        .btn.primary:hover { background-color: #059669; transform: scale(1.05); }
+
+        .btn.secondary { background-color: #f59e0b; }
+        .btn.secondary:hover { background-color: #d97706; transform: scale(1.05); }
+
+        .btn.tertiary { background-color: #0891b2; }
+        .btn.tertiary:hover { background-color: #0e7490; transform: scale(1.05); }
+
+        /* Other Specific Styles */
+        .header-gradient-1 {
+            background-image: linear-gradient(to right, #a855f7, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-gradient-2 {
+            background-image: linear-gradient(to right, #34d399, #fde047);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-gradient-3 {
+            background-image: linear-gradient(to right, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-gray-100">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#home" class="nav-logo">EmpowerRide</a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link-hover">Home</a>
+                <a href="#about" class="nav-link-hover">About Us</a>
+                <a href="#riders" class="nav-link-hover">Our Riders</a>
+                <a href="#faq" class="nav-link-hover">FAQs</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="#register-page" class="nav-button register">Register</a>
+                <a href="#book-ride-page" class="nav-button book">Book Ride</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="container">
+
+        <!-- Home Page -->
+        <section id="home" class="page text-center">
+            <h1 class="hero-title" style="font-size: 3rem; margin-bottom: 1rem;">
+                Ride with Trust. Ride with Choice.
+            </h1>
+            <p style="font-size: 1.25rem; color: #94a3b8; max-width: 48rem; margin: auto; margin-bottom: 2.5rem;">
+                Bridging the gap between college and corporate life by empowering women, one ride at a time.
+            </p>
+            
+            <div class="image-container highlight-on-hover" style="border: 2px solid #3f3f46; margin-bottom: 3rem;">
+                <img src="https://t4.ftcdn.net/jpg/06/57/05/53/360_F_657055311_v05w1LP6mmoV4WcHeJh2Lv2llvjAWFdt.jpg" alt="Woman riding a bike in a safe and secure manner" style="width: 100%; height: 24rem; object-fit: cover; object-position: center; border-radius: 0.5rem;">
+                <div class="image-overlay">
+                    <div class="cta-text">
+                        Ready to enjoy this ride?
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-container grid-3-col">
+                <div class="card fact-card p-6" style="border: 1px solid #3f3f46;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #d8b4fe; margin-bottom: 0.5rem;">Did You Know?</h3>
+                    <p style="color: #d1d5db;">Globally, empowering women could add $12 trillion to global growth by 2025.</p>
+                </div>
+                <div class="card fact-card p-6" style="border: 1px solid #3f3f46;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #a8e5a8; margin-bottom: 0.5rem;">Our Mission</h3>
+                    <p style="color: #d1d5db;">We aim to create a safer, more equitable ride-sharing service for everyone.</p>
+                </div>
+                <div class="card fact-card p-6" style="border: 1px solid #3f3f46;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #fde047; margin-bottom: 0.5rem;">Join Us</h3>
+                    <p style="color: #d1d5db;">By choosing EmpowerRide, you are supporting a community-focused initiative.</p>
+                </div>
+            </div>
+
+            <div style="padding-top: 3rem; padding-bottom: 3rem;">
+                <h2 style="font-size: 2.25rem; font-weight: 800; text-align: center; margin-bottom: 1.5rem;" class="header-gradient-2">
+                    Why Choose EmpowerRide?
+                </h2>
+                <div class="grid-container grid-2-col" style="max-width: 64rem; margin: auto;">
+                    <div>
+                        <p style="font-size: 1.125rem; color: #d1d5db; line-height: 1.6;">
+                            Our platform is more than just a service; it's a movement. We are dedicated to providing a secure and comfortable journey for every passenger, with a special focus on the empowerment of women. With our innovative gender-based rider selection, we offer a level of trust and security unparalleled in the industry.
+                        </p>
+                        <ul style="list-style-type: disc; margin-top: 1rem; color: #d1d5db; padding-left: 1.25rem; line-height: 1.5rem;">
+                            <li>Secure and verified male and female riders.</li>
+                            <li>Real-time tracking for peace of mind.</li>
+                            <li>Transparent pricing with no hidden fees.</li>
+                            <li>Dedicated 24/7 customer support.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img src="https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/05/05/Pictures/_de5732b8-3179-11e7-9a1e-ae80039293d8.JPG" alt="Image of a woman on a bike with a male rider" style="border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 2px solid #3f3f46; transition: transform 0.5s ease; width: 100%;">
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding-top: 3rem; padding-bottom: 3rem;">
+                <div class="grid-container grid-5-col">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLw4tEalonWo5zWD00UgRYyKgwYxsZX8BV6A&s" alt="A woman on a bike with a rider" class="rounded-xl highlight-on-hover" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 2px solid #3f3f46; width: 100%; height: auto; border-radius: 0.75rem;">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpWRBJXPJ42HFJP6Qd8KqT1sCyE6UIKvj3hg&s" alt="Women in a professional setting" class="rounded-xl highlight-on-hover" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 2px solid #3f3f46; width: 100%; height: auto; border-radius: 0.75rem;">
+                    <img src="https://media.istockphoto.com/id/1302685675/photo/two-business-women-working-in-office-stock-photo.jpg?s=612x612&w=0&k=20&c=zgH4vvnF9DpoCqdIJDu1L6La-XxTKgFebofm95OHc_s=" alt="Two business women working" class="rounded-xl highlight-on-hover" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 2px solid #3f3f46; width: 100%; height: auto; border-radius: 0.75rem;">
+                    <img src="https://media.istockphoto.com/id/687976998/vector/equal-arm-balance.jpg?s=612x612&w=0&k=20&c=WGVbwzWYqTKcfYJ3sm1tZUI7vd20h7kMX3ipdtOqSEY=" alt="A balance scale icon" class="rounded-xl highlight-on-hover" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 2px solid #3f3f46; width: 100%; height: auto; border-radius: 0.75rem;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Page -->
+        <section id="register-page" class="page">
+            <div class="card p-8 highlight-on-hover" style="max-width: 32rem; margin: auto;">
+                <h2 style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem;" class="header-gradient-2">Register to Ride</h2>
+                <form>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label for="userGender" style="display: block; color: #d1d5db; font-weight: 600; margin-bottom: 0.5rem;">Your Gender</label>
+                        <select id="userGender" name="userGender" required class="form-select">
+                            <option value="" disabled selected>Select your gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn primary">
+                        Register Now
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Book Ride Page -->
+        <section id="book-ride-page" class="page">
+            <div class="card p-8 highlight-on-hover" style="max-width: 32rem; margin: auto;">
+                <h2 style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem;" class="header-gradient-1">Book Your Ride</h2>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="pickupLocation" style="display: block; color: #d1d5db; font-weight: 600; margin-bottom: 0.5rem;">Pickup Location</label>
+                    <input type="text" id="pickupLocation" placeholder="Enter your pickup location" class="form-input" required>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="dropoffLocation" style="display: block; color: #d1d5db; font-weight: 600; margin-bottom: 0.5rem;">Drop-off Location</label>
+                    <input type="text" id="dropoffLocation" placeholder="Enter your drop-off location" class="form-input" required>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="riderTypeSelect" style="display: block; color: #d1d5db; font-weight: 600; margin-bottom: 0.5rem;">Choose Your Rider</label>
+                    <select id="riderTypeSelect" name="riderTypeSelect" class="form-select">
+                        <option value="male">Male Rider</option>
+                        <option value="female">Female Rider</option>
+                    </select>
+                </div>
+                <button class="btn secondary">
+                    Book Ride
+                </button>
+            </div>
+        </section>
+
+        <!-- Ride Tracker Page -->
+        <section id="ride-tracker-page" class="page">
+            <h2 style="font-size: 2.25rem; font-weight: 700; text-align: center; margin-bottom: 2rem;" class="header-gradient-3">
+                Your Rider Is On The Way!
+            </h2>
+            <div class="card p-6 highlight-on-hover" style="max-width: 48rem; margin: auto;">
+                <div class="grid-2-col" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <img id="riderImage" src="https://www.shutterstock.com/image-photo/positive-handsome-young-indian-man-260nw-2443425075.jpg" alt="Rider Image" style="width: 6rem; height: 6rem; border-radius: 9999px; border: 2px solid #a855f7; object-fit: cover;">
+                        <div>
+                            <p style="font-size: 1.25rem; font-weight: 700; color: #c084fc;" id="riderName">Anand Verma</p>
+                            <p style="font-size: 0.875rem; color: #94a3b8; text-transform: capitalize;">Gender: Male</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-size: 1.125rem; color: #d1d5db;">ETA: <span id="etaDisplay" style="font-weight: 700; color: #34d399;">5 mins</span></p>
+                        <p style="font-size: 1.125rem; color: #d1d5db;">Distance: <span id="distanceDisplay" style="font-weight: 700; color: #34d399;">2.5 km</span></p>
+                    </div>
+                </div>
+                
+                <div style="position: relative; width: 100%; height: 6rem; margin-bottom: 1.5rem;">
+                    <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" viewBox="0 0 400 100" preserveAspectRatio="none">
+                        <path d="M 20 80 Q 200 10, 380 80" stroke="#f472b6" stroke-width="4" fill="none" />
+                        <circle r="8" fill="#a855f7" cx="200" cy="45" />
+                        <circle cx="20" cy="80" r="5" fill="#16a34a" />
+                        <circle cx="380" cy="80" r="5" fill="#ef4444" />
+                    </svg>
+                </div>
+                
+                <div style="background-color: #3f3f46; padding: 1rem; border-radius: 0.5rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 600; color: #e5e7eb; margin-bottom: 0.5rem;">Payment Details</h3>
+                    <div class="flex-container" style="color: #d1d5db; margin-bottom: 0.5rem;">
+                        <span>Ride Cost:</span>
+                        <span style="font-weight: 700; color: white;">₹150</span>
+                    </div>
+                    <div class="flex-container" style="margin-bottom: 1rem;">
+                        <label for="tipInput" style="color: #d1d5db;">Tip:</label>
+                        <input type="number" placeholder="0" min="0" style="width: 6rem; text-align: center; background-color: #27272a; border: 1px solid #3f3f46; border-radius: 0.25rem; padding: 0.25rem;">
+                    </div>
+                    <div class="flex-container" style="font-size: 1.125rem; font-weight: 700; color: white; border-top: 1px solid #52525b; padding-top: 1rem;">
+                        <span>Total Amount:</span>
+                        <span>₹150</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Page -->
+        <section id="ride-feedback-page" class="page">
+            <div class="card p-8 highlight-on-hover" style="max-width: 32rem; margin: auto;">
+                <h2 style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem;" class="header-gradient-2">How Was Your Ride?</h2>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="feedbackText" style="display: block; color: #d1d5db; font-weight: 600; margin-bottom: 0.5rem;">Share Your Feedback</label>
+                    <textarea id="feedbackText" rows="6" placeholder="Tell us about your experience..." class="form-textarea"></textarea>
+                </div>
+                <button class="btn tertiary">
+                    Submit Feedback
+                </button>
+            </div>
+        </section>
+
+        <!-- Our Riders Page -->
+        <section id="riders" class="page">
+            <div style="max-width: 72rem; margin: auto;">
+                <h2 style="font-size: 2.25rem; font-weight: 700; text-align: center; margin-bottom: 2rem;" class="header-gradient-3">Meet Our Top-Rated Riders</h2>
+                <div class="grid-container grid-5-col">
+                    <!-- Rider 1 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://www.shutterstock.com/image-photo/positive-handsome-young-indian-man-260nw-2443425075.jpg" alt="Rider 1" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Anand Verma</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span>
+                        </div>
+                    </div>
+                    <!-- Rider 2 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://thumbs.dreamstime.com/b/young-indian-woman-23082467.jpg" alt="Rider 2" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Shalini Gupta</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="empty">★</span>
+                        </div>
+                    </div>
+                    <!-- Rider 3 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://www.shutterstock.com/image-photo/studio-portrait-smile-indian-student-260nw-2453208639.jpg" alt="Rider 3" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Rohan Singh</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span>
+                        </div>
+                    </div>
+                    <!-- Rider 4 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://st2.depositphotos.com/4153545/8120/i/950/depositphotos_81209498-stock-photo-young-traditional-indian-woman.jpg" alt="Rider 4" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Pooja Patel</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="empty">★</span>
+                        </div>
+                    </div>
+                    <!-- Rider 5 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://www.shutterstock.com/image-photo/young-indian-man-wearing-red-260nw-1448274941.jpg" alt="Rider 5" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Vikram Sen</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span>
+                        </div>
+                    </div>
+                    <!-- Rider 6 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://media.istockphoto.com/id/1180679969/video/smiling-woman-pretty-face-looking-at-camera-closeup-portrait.jpg?s=640x640&k=20&c=RiVneDBsmGHHSp8_4-i-yJ1SliTFQ7VbCyXs7AwC8KM=" alt="Rider 6" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Simran Kaur</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="empty">★</span>
+                        </div>
+                    </div>
+                    <!-- Rider 7 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://img.freepik.com/free-photo/closeup-young-hispanic-man-casuals-studio_662251-600.jpg?semt=ais_incoming&w=740&q=80" alt="Rider 7" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Amit Yadav</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span>
+                        </div>
+                    </div>
+                    <!-- Rider 8 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXFf6DrwizHD_fE2Qcx67dwDUdy0VleqUWqLSsBfeQzZUssRR6JZ7ZmuMtLX4jOYa0SLA&usqp=CAU" alt="Rider 8" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Lata Sharma</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="empty">★</span><span class="empty">★</span>
+                        </div>
+                    </div>
+                    <!-- Rider 9 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://thumbs.dreamstime.com/b/handsome-indian-man-18399420.jpg" alt="Rider 9" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Sanjay Mehra</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="empty">★</span>
+                        </div>
+                    </div>
+                    <!-- Rider 10 -->
+                    <div class="card p-4 text-center highlight-on-hover">
+                        <img src="https://media.istockphoto.com/id/1502236992/photo/domestic-portrait-of-mature-indian-woman.jpg?s=612x612&w=0&k=20&c=e8XJks39jrvQ_gMSFgfJyxIfu-yHx0btcqAKeaM7j_8=" alt="Rider 10" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; border: 2px solid #a855f7; object-fit: cover;">
+                        <p style="font-weight: 700; font-size: 1.125rem; color: white;">Kavita Reddy</p>
+                        <div class="star-rating">
+                            <span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span><span class="filled">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Feedback Section - Moved from Home page -->
+                <div style="padding-top: 3rem; padding-bottom: 3rem;">
+                    <h2 style="font-size: 2.25rem; font-weight: 700; text-align: center; margin-bottom: 1.5rem;" class="header-gradient-3">
+                        What Our Users Are Saying
+                    </h2>
+                    <div style="max-width: 48rem; margin: auto;">
+                        <!-- Sample feedback will be replaced by Firestore data on load -->
+                        <div class="feedback-card" style="background-color: #27272a; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); margin-bottom: 1rem; border: 1px solid #3f3f46;">
+                            <p class="italic" style="font-size: 0.875rem; color: #d1d5db;">Rider was a male</p>
+                            <p class="feedback-text" style="margin-top: 0.5rem; color: white;">"The ride was smooth, and the driver was very professional. Felt completely safe, a great service!" - Rajesh K.</p>
+                        </div>
+                        <div class="feedback-card" style="background-color: #27272a; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); margin-bottom: 1rem; border: 1px solid #3f3f46;">
+                            <p class="italic" style="font-size: 0.875rem; color: #d1d5db;">Rider was a female</p>
+                            <p class="feedback-text" style="margin-top: 0.5rem; color: white;">"I love the option to choose a female rider. It gives me a lot of peace of mind. Thank you, EmpowerRide!" - Sunita P.</p>
+                        </div>
+                        <div class="feedback-card" style="background-color: #27272a; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); margin-bottom: 1rem; border: 1px solid #3f3f46;">
+                            <p class="italic" style="font-size: 0.875rem; color: #d1d5db;">Rider was a male</p>
+                            <p class="feedback-text" style="margin-top: 0.5rem; color: white;">"The app is so easy to use, and the riders are always on time. A reliable and trustworthy service." - Arjun M.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Page -->
+        <section id="about" class="page">
+            <div style="max-width: 64rem; margin: auto; text-align: center;">
+                <h2 style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem;" class="header-gradient-2">About EmpowerRide</h2>
+                <p style="font-size: 1.125rem; color: #d1d5db; margin-bottom: 1.5rem;">EmpowerRide was founded on the principle that transportation should be safe, reliable, and accessible for all. We believe in creating a community where every individual feels secure, especially women who often face unique challenges in public and shared transportation. Our platform is more than just a ride-sharing service; it's a commitment to social progress and empowerment.</p>
+                
+                <div class="grid-container grid-2-col" style="margin-bottom: 2rem;">
+                    <!-- Mission Block -->
+                    <div class="image-container highlight-on-hover" style="border: 2px solid #3f3f46; border-radius: 0.75rem;">
+                        <img src="https://sapphireschool.in/wp-content/uploads/2024/06/Mission.png" alt="Mission Image" style="width: 100%; height: auto; object-fit: cover; border-radius: 0.75rem;">
+                        <div class="image-overlay">
+                            <div>
+                                <h3 style="font-size: 1.5rem; font-weight: 700; background-image: linear-gradient(to right, #a855f7, #ec4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">Our Mission</h3>
+                                <p style="color: #e5e7eb;">Our mission is to provide a secure and comfortable journey for every passenger, with a special focus on the empowerment of women. We aim to build a network of trusted riders and passengers who contribute to a safer, more inclusive society.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Vision Block -->
+                    <div class="image-container highlight-on-hover" style="border: 2px solid #3f3f46; border-radius: 0.75rem;">
+                        <img src="https://www.viraj.com/wp-content/uploads/2021/11/vision-1.jpg" alt="Vision Image" style="width: 100%; height: auto; object-fit: cover; border-radius: 0.75rem;">
+                        <div class="image-overlay">
+                            <div>
+                                <h3 style="font-size: 1.5rem; font-weight: 700; background-image: linear-gradient(to right, #fde047, #ef4444); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">Our Vision</h3>
+                                <p style="color: #e5e7eb;">We envision a world where a safe ride is a given, not a luxury. By leveraging technology, we are creating a truly empowering experience for our users, one ride at a time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Meet the Team Section -->
+                <div style="padding-top: 3rem; padding-bottom: 3rem;">
+                    <h3 style="font-size: 2.25rem; font-weight: 700; text-align: center; margin-bottom: 2rem;" class="header-gradient-2">Meet the Team</h3>
+                    <div class="grid-container grid-3-col">
+                        <!-- Team Member 1 -->
+                        <div class="card p-6 text-center highlight-on-hover">
+                            <img src="https://www.shutterstock.com/image-photo/beautiful-happy-smiling-asian-young-260nw-2366996597.jpg" alt="Team Member 1" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; object-fit: cover; border: 2px solid #fcd34d;">
+                            <p style="font-weight: 700; font-size: 1.25rem; color: white;">Anjali Deshpande</p>
+                            <p class="italic" style="font-size: 0.875rem; color: #94a3b8;">"Empowerment starts with safe spaces."</p>
+                        </div>
+                        <!-- Team Member 2 -->
+                        <div class="card p-6 text-center highlight-on-hover">
+                            <img src="https://www.shutterstock.com/image-photo/positive-confident-company-director-formal-260nw-2451794051.jpg" alt="Team Member 2" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; object-fit: cover; border: 2px solid #fcd34d;">
+                            <p style="font-weight: 700; font-size: 1.25rem; color: white;">Rahul Sharma</p>
+                            <p class="italic" style="font-size: 0.875rem; color: #94a3b8;">"Building a better community, one ride at a time."</p>
+                        </div>
+                        <!-- Team Member 3 -->
+                        <div class="card p-6 text-center highlight-on-hover">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFaW9D7gQ6hftGa20Lkbo91MUHWd-CerjZXA&s" alt="Team Member 3" style="width: 6rem; height: 6rem; border-radius: 9999px; margin: auto; margin-bottom: 1rem; object-fit: cover; border: 2px solid #fcd34d;">
+                            <p style="font-weight: 700; font-size: 1.25rem; color: white;">Priya Singh</p>
+                            <p class="italic" style="font-size: 0.875rem; color: #94a3b8;">"Technology should serve to protect and unite."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAQs Page -->
+        <section id="faq" class="page">
+            <div style="max-width: 48rem; margin: auto;">
+                <h2 style="font-size: 2.25rem; font-weight: 700; text-align: center; margin-bottom: 2rem;" class="header-gradient-1">Frequently Asked Questions</h2>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="card p-6 highlight-on-hover">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 0.5rem;">How does gender-based rider matching work?</h3>
+                        <p style="color: #d1d5db;">If a female user requests a ride, she will be given the option to choose a female rider. Male users will be matched with male riders to ensure comfort and safety for all passengers.</p>
+                    </div>
+                    <div class="card p-6 highlight-on-hover">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 0.5rem;">Is my personal information secure?</h3>
+                        <p style="color: #d1d5db;">Yes, we take user privacy and data security very seriously. All personal information is encrypted and stored securely. We adhere to strict data protection protocols to ensure your information is safe.</p>
+                    </div>
+                    <div class="card p-6 highlight-on-hover">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 0.5rem;">What if I have an emergency during a ride?</h3>
+                        <p style="color: #d1d5db;">Our app has a built-in safety feature that allows you to share your ride details with trusted contacts. In case of an emergency, you can discreetly contact our 24/7 support team or emergency services directly through the app.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem; text-align: center; animation: pulse 2s infinite;">
+                    <img src="https://www.opscstudy.com/wp-content/uploads/2024/11/Women-Empowerment_11zon-1-1024x595.jpg" alt="Women Empowerment" style="max-width: 100%; height: auto; border-radius: 0.75rem; margin: auto; border: 2px solid #3f3f46;" class="highlight-on-hover">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="background-color: #18181b; padding-top: 1.5rem; padding-bottom: 1.5rem; margin-top: 3rem; box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);">
+        <div style="max-width: 1280px; margin: auto; padding: 0 1rem; text-align: center; color: #6b7280; font-size: 0.875rem;">
+            &copy; 2024 EmpowerRide. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>
